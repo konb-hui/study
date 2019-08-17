@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.zph.mapper.AdministratorMapper">
+	<insert id="add" parameterType="Administrator">
+		insert into administrator_ (username,password,type) values (#{username},#{password},#{type})
+	</insert>
+	<delete id="delete" parameterType="Administrator">
+		delete from administrator_ where id = #{id}
+	</delete>
+	<select id="get" parameterType="int" resultType="Administrator">
+		select * from administrator_ where id = #{id}
+	</select>
+	<update id="update" parameterType="Administrator">
+		update administrator_ set username=#{username},password=#{password},type=#{type} where id=#{id}
+	</update>
+	<select id="list" resultType="Administrator">
+		select * from administrator_
+	</select>
+	<select id="getByName" parameterType="String">
+		select * from administrator_ where username=#{username}
+	</select>
+</mapper>
