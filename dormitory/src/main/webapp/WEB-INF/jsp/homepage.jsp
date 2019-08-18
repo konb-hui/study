@@ -9,5 +9,21 @@
 </head>
 <body>
 <h1>欢迎${username}</h1>
+<div>
+<table>
+	<tr>
+		<td><a href="building">宿舍楼栋管理</a></td>
+	</tr>
+	<tr>
+		<td><a href="">学生信息</a></td>
+	</tr>
+	<tr>
+		<td><a href="">教职工信息</a></td>
+	</tr>
+	<tr>
+		<td><a href="">管理员信息</a></td>
+	</tr>
+</table>
+</div>
 </body>
 </html>

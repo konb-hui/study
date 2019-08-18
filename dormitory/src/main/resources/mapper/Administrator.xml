@@ -19,7 +19,7 @@
 	<select id="list" resultType="Administrator">
 		select * from administrator_
 	</select>
-	<select id="getByName" parameterType="String">
+	<select id="getByName" parameterType="String" resultType="Administrator">
 		select * from administrator_ where username=#{username}
 	</select>
 </mapper>

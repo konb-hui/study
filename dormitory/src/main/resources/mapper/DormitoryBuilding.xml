@@ -5,7 +5,7 @@
     
 <mapper namespace="com.zph.mapper.DormitoryBuildingMapper">
 	<insert id="add" parameterType="DormitoryBuilding">
-		insert into dormitorybuilding_ (name,roomNumber,surplusRoom,type) values (#{name},#{roomNumber},#{surplusRoom},#{type})
+		insert into dormitorybuilding_ (name,layerRoomNumber,surplusRoom,type,layerNumber,areaNumber) values (#{name},#{layerRoomNumber},#{surplusRoom},#{type},#{layerNumber},#{areaNumber})
 	</insert>
 	<delete id="delete" parameterType="DormitoryBuilding">
 		delete from dormitorybuilding_ where id = #{id}
@@ -14,7 +14,7 @@
 		select * from dormitorybuilding_ where id = #{id}
 	</select>
 	<update id="update" parameterType="DormitoryBuilding">
-		update dormitorybuilding_ set name=#{name},roomNumber=#{roomNumber},surplusRoom=#{surplusRoom},type=#{type} where id=#{id}
+		update dormitorybuilding_ set name=#{name},layerRoomNumber=#{layerRoomNumber},surplusRoom=#{surplusRoom},type=#{type},layerNumber=#{layerNumber},areaNumber=#{areaNumber} where id=#{id}
 	</update>
 	<select id="list" resultType="DormitoryBuilding">
 		select * from dormitorybuilding_

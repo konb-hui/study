@@ -19,17 +19,18 @@ public class AdministratorController {
 		return new ModelAndView("login");
 	}
 	
-	@RequestMapping("check")
+	@RequestMapping("homepage")
 	public ModelAndView check(Administrator administrator) {
 		Administrator admin = administratorService.getByName(administrator.getUsername());
-		ModelAndView mav = new ModelAndView("login");
+		ModelAndView mav = new ModelAndView("redirect:login");
 		if(admin != null) {
 			if(admin.getPassword().equals(administrator.getPassword())) {
 				mav = new ModelAndView("homepage");
-				mav.addObject(admin);
+				mav.addObject("username",admin.getUsername());
 			}
 		}else if(null == admin) {
-			mav.addObject("msg","用户或密码错误");
+			mav = new ModelAndView("redirect:login");
+			//mav.addObject("msg","用户或密码错误");
 		}
 		return mav;
 	}
