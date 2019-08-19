@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zph.mapper.DormitoryMapper">
+	<insert id="add" parameterType="Dormitory">
+		insert into dormitory_ (bid,name,surplusBed) values (#{bid},#{name},#{surplusBed})
+	</insert>
+	<delete id="deleteByBuilding" parameterType="Dormitory">
+		delete from dormitory_ where bid = #{bid}
+	</delete>
+	<select id="getByBuilding" parameterType="int" resultType="Dormitory">
+		select * from dormitory_ where bid = #{bid}
+	</select>
+	<select id="get" parameterType="int" resultType="Dormitory">
+		select * from dormitory_ where id = #{id}
+	</select>
+	<select id="getByName" parameterType="String" resultType="Dormitory">
+		select * from dormitory_ where name=#{name}
+	</select>
+	<select id="getDb" parameterType="int" resultType="DormitoryBuilding">
+		select * from dormitoryBuilding_ where id = #{id}
+	</select>
+</mapper>

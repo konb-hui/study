@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.zph.mapper.DormitoryBuildingMapper;
 import com.zph.pojo.DormitoryBuilding;
@@ -24,5 +25,22 @@ public class DormitoryBuildingServiceImpl implements DormitoryBuildingService {
 		// TODO Auto-generated method stub
 		dormitoryBuildingMapper.add(dormitoryBuilding);
 	}
+	@Override
+	public void delete(int id) {
+		// TODO Auto-generated method stub
+		dormitoryBuildingMapper.delete(id);
+	}
+	@Override
+	public DormitoryBuilding get(int id) {
+		// TODO Auto-generated method stub
+		DormitoryBuilding dormitoryBuilding = dormitoryBuildingMapper.get(id);
+		return dormitoryBuilding;
+	}
+	@Override
+	public void update(DormitoryBuilding dormitoryBuilding) {
+		// TODO Auto-generated method stub
+		dormitoryBuildingMapper.update(dormitoryBuilding);
+	}
+	
 
 }

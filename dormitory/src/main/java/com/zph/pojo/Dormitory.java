@@ -1,0 +1,34 @@
+package com.zph.pojo;
+
+public class Dormitory {
+	private int id;
+	private int bid;
+	private String name;
+	//剩余可住房间数，默认学生为4，教职工为1
+	private int surplusBed;
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public int getBid() {
+		return bid;
+	}
+	public void setBid(int bid) {
+		this.bid = bid;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int getSurplusBed() {
+		return surplusBed;
+	}
+	public void setSurplusBed(int surplusBed) {
+		this.surplusBed = surplusBed;
+	}
+	
+}

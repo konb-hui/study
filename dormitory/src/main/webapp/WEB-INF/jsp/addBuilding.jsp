@@ -44,7 +44,7 @@
 		<tr>
 			<td><input type="reset" value="重置"></td>
 			<td><input type="submit" value="提交（自动生成房间信息）" onclick="return check();"></td>
-			<td><input type="hidden" name="surplusRoom" id="surplusRoom" value="50"></td>
+			<td><input type="hidden" name="surplusRoom" id="surplusRoom"></td>
 		</tr>
 	</table>
 	<script type="text/javascript">
@@ -85,7 +85,10 @@
 				document.getElementById("checkLayerRoomNumber").innerHTML = "";
 				flag3 = true;
 			}
-			if(flag1 == true && flag2 == true && flag3 == true) flag = true;
+			if(flag1 == true && flag2 == true && flag3 == true) {
+				surplus();
+				flag = true;
+			}
 			else flag = false;
 			return flag;
 		}
@@ -94,7 +97,7 @@
 			var layerNumber = document.getElementById("layerNumber").value;
 			var layerRoomNumber = document.getElementById("layerRoomNumber").value;
 			var n = areaNumber * layerNumber * layerRoomNumber;
-			return n;
+			document.getElementById("surplusRoom").value = n;
 		}
 	</script>
 </form>

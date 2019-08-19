@@ -1,5 +1,7 @@
 package com.zph.pojo;
 
+import java.util.List;
+
 public class DormitoryBuilding {
 	private int id;
 	private String name;

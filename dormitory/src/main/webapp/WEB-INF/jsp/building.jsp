@@ -17,6 +17,7 @@
 			<td>楼栋类型</td>
 			<td>每层的房间数</td>
 			<td>剩余可用房间数</td>
+			<td>查看该楼栋的所有宿舍</td>
 			<td>修改</td>
 			<td>删除</td>
 			<td><a href="addBuilding">添加</a></td>
@@ -27,11 +28,14 @@
 				<td>${db.name}</td>
 				<td>${db.areaNumber}</td>
 				<td>${db.layerNumber}</td>
-				<td>${db.type}</td>
+				<c:if test="${db.type == 0}"><td>男生宿舍</td></c:if>
+				<c:if test="${db.type == 1}"><td>女生宿舍</td></c:if>
+				<c:if test="${db.type == 2}"><td>教职工宿舍</td></c:if>
 				<td>${db.layerRoomNumber}</td>
 				<td>${db.surplusRoom}</td>
-				<td><a href="">修改</a></td>
-				<td><a href="">删除</a></td>
+				<td><a href="listDormitory?id=${db.id}">查看</a></td>
+				<td><a href="editBuilding?id=${db.id}">修改</a></td>
+				<td><a href="deleteBuilding?id=${db.id}">删除</a></td>
 			</tr>
 		</c:forEach>
 	</table>
