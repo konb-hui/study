@@ -15,7 +15,7 @@
 		<td><a href="building">宿舍楼栋管理</a></td>
 	</tr>
 	<tr>
-		<td><a href="">学生信息</a></td>
+		<td><a href="student/listStudent">学生信息</a></td>
 	</tr>
 	<tr>
 		<td><a href="">教职工信息</a></td>

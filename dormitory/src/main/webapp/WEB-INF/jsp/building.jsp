@@ -39,5 +39,6 @@
 			</tr>
 		</c:forEach>
 	</table>
+	<a href="homepage">返回首页</a>
 </body>
 </html>

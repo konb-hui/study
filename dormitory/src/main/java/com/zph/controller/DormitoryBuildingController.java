@@ -50,7 +50,8 @@ public class DormitoryBuildingController {
 	public ModelAndView deleteBuilding(DormitoryBuilding dormitoryBuilding) {
 		ModelAndView mav = new ModelAndView();
 		dormitoryBuildingService.delete(dormitoryBuilding.getId());
-		mav.setViewName("redirect:/building");
+		int bid = dormitoryBuilding.getId();
+		mav.setViewName("redirect:deleteDormitory?bid=" + bid);
 		return mav;
 	}
 	
@@ -69,5 +70,9 @@ public class DormitoryBuildingController {
 		dormitoryBuildingService.update(dormitoryBuilding);
 		mav.setViewName("redirect:/building");
 		return mav;
+	}
+	@RequestMapping("/addStudent")
+	public ModelAndView addStudent() {
+		return new ModelAndView("addStudent");
 	}
 }

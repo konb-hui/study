@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.zph.mapper.StudentMapper">
+	<insert id="add" parameterType="Student">
+		insert into student_ (name,sex,className,grade,doid) values (#{name},#{sex},#{className},#{grade},-1)
+	</insert>
+	<delete id="delete" parameterType="Student">
+		delete from student_ where id = #{id}
+	</delete>
+	<select id="get" parameterType="int" resultType="Student">
+		select * from student_ where id = #{id}
+	</select>
+	<update id="update" parameterType="Student">
+		update student_ set name=#{name},className=#{className},grade=#{grade},doid=#{doid} where id = #{id}
+	</update>
+	<select id="list" resultType="Student">
+		select * from student_
+		<if test="start!=null and count!=null">
+			limit #{start},#{count}
+		</if>
+	</select>
+	<select id="total" resultType="int">
+		select count(*) from student_
+	</select>
+</mapper>

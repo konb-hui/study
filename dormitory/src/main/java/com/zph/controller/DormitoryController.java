@@ -1,5 +1,6 @@
 package com.zph.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.zph.pojo.Dormitory;
 import com.zph.pojo.DormitoryBuilding;
 import com.zph.service.DormitoryService;
+import com.zph.util.Page;
 
 @Controller
 @RequestMapping("")
@@ -21,10 +23,14 @@ public class DormitoryController {
 	DormitoryService dormitoryService;
 	
 	@RequestMapping("listDormitory")
-	public ModelAndView addDormitory(DormitoryBuilding db) {
+	public ModelAndView addDormitory(DormitoryBuilding db,Page page) {
 		ModelAndView mav = new ModelAndView();
-		List<Dormitory> dormitories = dormitoryService.getByBuilding(db.getId());
-		if(dormitories.size() == 0) {
+		HashMap<String, Integer> map = new HashMap<>();
+		map.put("bid", db.getId());
+		List<Dormitory> dormitories1 = dormitoryService.getByBuilding(map);
+		int total = dormitoryService.totalOfPart(db.getId());
+		page.calculateLast(total);
+		if(dormitories1.size() == 0) {
 			DormitoryBuilding dormitoryBuilding = dormitoryService.getDb(db.getId());
 			if(dormitoryBuilding != null) {
 				int surplus = dormitoryBuilding.getSurplusRoom();
@@ -60,9 +66,24 @@ public class DormitoryController {
 				}
 			}
 		}
-
-		mav.setViewName("redirect:/building");
+		if(page.getStart() < 0) page.setStart(0);
+		else if(page.getStart() >= total) page.setStart(page.getLast());
+		map.put("start", page.getStart());
+		map.put("count", page.getCount());
+		List<Dormitory> dormitories = dormitoryService.getByBuilding(map);
+		HashMap<String, Object> map2 = new HashMap<>();
+		map2.put("ds", dormitories);
+		map2.put("bid", db.getId());
+		mav.addAllObjects(map2);
+		mav.setViewName("listDormitory");
 		return mav;
 	}
 	
+	@RequestMapping("deleteDormitory")
+	public ModelAndView deleteByBuilding(int bid) {
+		ModelAndView mav = new ModelAndView();
+		dormitoryService.deleteByBuilding(bid);
+		mav.setViewName("redirect:building");
+		return mav;
+	}
 }

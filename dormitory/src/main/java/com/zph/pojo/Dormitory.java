@@ -6,6 +6,8 @@ public class Dormitory {
 	private String name;
 	//剩余可住房间数，默认学生为4，教职工为1
 	private int surplusBed;
+	//所属楼栋
+	private DormitoryBuilding dormitoryBuilding;
 	public int getId() {
 		return id;
 	}
@@ -29,6 +31,12 @@ public class Dormitory {
 	}
 	public void setSurplusBed(int surplusBed) {
 		this.surplusBed = surplusBed;
+	}
+	public DormitoryBuilding getDormitoryBuilding() {
+		return dormitoryBuilding;
+	}
+	public void setDormitoryBuilding(DormitoryBuilding dormitoryBuilding) {
+		this.dormitoryBuilding = dormitoryBuilding;
 	}
 	
 }

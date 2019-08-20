@@ -3,16 +3,29 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zph.mapper.DormitoryMapper">
+	<resultMap type="Dormitory" id="DormitoryBean">
+		<id column="did" property="id"/>
+		<result column="dname" property="name"/>
+		<result column="bid" property="bid"/>
+		<result column="surplusBed" property="surplusBed"/>
+		<association property="dormitoryBuilding" javaType="DormitoryBuilding">
+			<id column="dbid" property="id"/>
+			<result column="dbname" property="name"/>
+		</association>
+	</resultMap>
 	<insert id="add" parameterType="Dormitory">
 		insert into dormitory_ (bid,name,surplusBed) values (#{bid},#{name},#{surplusBed})
 	</insert>
 	<delete id="deleteByBuilding" parameterType="Dormitory">
 		delete from dormitory_ where bid = #{bid}
 	</delete>
-	<select id="getByBuilding" parameterType="int" resultType="Dormitory">
-		select * from dormitory_ where bid = #{bid}
+	<select id="getByBuilding" parameterType="hashmap" resultMap="DormitoryBean">
+		select db.*, d.*, db.id 'dbid', d.id 'did', db.name 'dbname', d.name 'dname' from dormitoryBuilding_ db inner join dormitory_ d on db.id = #{bid} and db.id=d.bid
+		<if test="start!=null and count!=null">
+			limit #{start},#{count}
+		</if>
 	</select>
-	<select id="get" parameterType="int" resultType="Dormitory">
+	<select id="getById" parameterType="int" resultType="Dormitory">
 		select * from dormitory_ where id = #{id}
 	</select>
 	<select id="getByName" parameterType="String" resultType="Dormitory">
@@ -20,5 +33,8 @@
 	</select>
 	<select id="getDb" parameterType="int" resultType="DormitoryBuilding">
 		select * from dormitoryBuilding_ where id = #{id}
+	</select>
+	<select id="totalOfPart" parameterType="int" resultType="int">
+		select count(*) from dormitory_ where bid = #{bid}
 	</select>
 </mapper>
