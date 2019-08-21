@@ -16,8 +16,28 @@
 	<update id="update" parameterType="Student">
 		update student_ set name=#{name},className=#{className},grade=#{grade},doid=#{doid} where id = #{id}
 	</update>
-	<select id="list" resultType="Student">
+	<select id="list" parameterType="hashmap" resultType="Student">
 		select * from student_
+		<where>
+		<if test="className!='null' and grade!=null">
+			and className=#{className}
+		</if>
+		<if test="grade!='null' and grade!=null">
+			and grade=#{grade}
+		</if>
+		<if test="sex!='null' and grade!=null">
+			and sex=#{sex}
+		</if>
+		<if test="doid==-1">
+			and doid=#{doid}
+		</if>
+		<if test="doid==0">
+			and doid >= #{doid}
+		</if>
+		<if test="name!=null">
+			and name like concat('%',#{name},'%')
+		</if>
+		</where>
 		<if test="start!=null and count!=null">
 			limit #{start},#{count}
 		</if>

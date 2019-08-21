@@ -24,6 +24,7 @@
 		<td><a href="">管理员信息</a></td>
 	</tr>
 </table>
+<a href="student/test">增加学生信息</a>
 </div>
 </body>
 </html>

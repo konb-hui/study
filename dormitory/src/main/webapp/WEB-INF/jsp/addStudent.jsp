@@ -13,6 +13,7 @@
 		<tr>
 			<td>姓名</td>
 			<td><input type="text" name="name" id="name"></td>
+			<td><span id="checkName"></span></td>
 		</tr>
 		<tr>
 			<td>性别</td>
@@ -37,13 +38,27 @@
 			<td><select name="grade">
 				<option value="高一">高一</option>
 				<option value="高二">高二</option>
+				<option value="高三">高三</option>
 			</select></td>
 		</tr>
 		<tr>
-			<td><input type="submit" value="提交"></td>
+			<td><input type="submit" value="提交" onclick="return check();"></td>
 			<td><input type="reset" value="重置"></td>
 		</tr>
 	</table>
 </form>
+<script type="text/javascript">
+	function check() {
+		var name = document.getElementById("name").value;
+		if(name.trim().length == 0){
+			document.getElementById("checkName").innerHTML = "名字不能为空";
+			return false;
+		}
+		else {
+			document.getElementById("checkName").innerHTML = "";
+			return true
+		}
+	}
+</script>
 </body>
 </html>

@@ -6,7 +6,7 @@ public class Student {
 	private String sex;
 	private String className;
 	private String grade;
-	private int doid;
+	private Integer doid;
 	private Dormitory dormitory;
 	public int getId() {
 		return id;
@@ -38,10 +38,10 @@ public class Student {
 	public void setGrade(String grade) {
 		this.grade = grade;
 	}
-	public int getDoid() {
+	public Integer getDoid() {
 		return doid;
 	}
-	public void setDoid(int doid) {
+	public void setDoid(Integer doid) {
 		this.doid = doid;
 	}
 	public Dormitory getDormitory() {
