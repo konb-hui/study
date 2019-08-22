@@ -14,34 +14,34 @@
 			<td>请选择性别</td>
 			<td><select name="sex">
 				<option value="null">
-				<option value="男">男</option>
-				<option value="女">女</option>
+				<option value="男" ${map.sex eq "男"?'selected':''}>男</option>
+				<option value="女" ${map.sex eq "女"?'selected':''}>女</option>
 				</select>
 			</td>
 			<td>请选择班级</td>
 			<td><select name="className">
 				<option value="null">
-				<option value="一班">一班</option>
-				<option value="二班">二班</option>
-				<option value="三班">三班</option>
-				<option value="四班">四班</option>
+				<option value="一班" ${map.className eq "一班"?'selected':''}>一班</option>
+				<option value="二班" ${map.className eq "二班"?'selected':''}>二班</option>
+				<option value="三班" ${map.className eq "三班"?'selected':''}>三班</option>
+				<option value="四班" ${map.className eq "四班"?'selected':''}>四班</option>
 			</select>
 			</td>
 			<td>请选择年级</td>
 			<td><select name="grade">
 				<option value="null">
-				<option value="高一">高一</option>
-				<option value="高二">高二</option>
-				<option value="高三">高三</option>
-			</select></td>
+				<option value="高一" ${map.grade eq "高一"?'selected':''}>高一</option>
+				<option value="高二" ${map.grade eq "高二"?'selected':''}>高二</option>
+				<option value="高三" ${map.grade eq "高三"?'selected':''}>高三</option>
+				</select></td>
 			<td>请选择宿舍分配情况</td>
 			<td><select name="doid">
 				<option>
-				<option value="0">已分配</option>
-				<option value="-1">未分配</option>
+				<option value="0" ${map.doid >= 0?'selected':''}>已分配</option>
+				<option value="-1" ${map.doid == -1?'selected':''}>未分配</option>
 			</select></td>
 			<td>按名字搜索</td>
-			<td><input name="name" type="text" id="name"></td>
+			<td><input name="name" type="text" id="name" value="${map.name}"></td>
 			<td><input type="submit" value="搜索"></td>
 		</tr>
 	</table>
@@ -65,7 +65,7 @@
 		<td>${s.sex}</td>
 		<td>${s.className}</td>
 		<td>${s.grade}</td>
-		<c:if test="${s.doid == -1}"><td>无</td></c:if>
+		<c:if test="${s.doid == -1}"><td>无（<a href="">添加宿舍</a>）</td></c:if>
 		<c:if test="${s.doid > -1}"><td>${s.dormitory.dormitoryBuilding.name} ${s.dormitory.name}</c:if>
 		<td><a href="editStudent?id=${s.id}">修改</a></td>
 		<td><a href="deleteStudent?id=${s.id}">删除</a></td>

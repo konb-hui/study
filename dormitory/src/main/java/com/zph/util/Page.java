@@ -23,11 +23,15 @@ public class Page {
 		this.last = last;
 	}
     public void calculateLast(int total) {
+    	if(total < 5) {
+    		last = 0;
+    	}else {
         // 假设总数是50，是能够被5整除的，那么最后一页的开始就是45
         if (0 == total % count)
             last = total - count;
         // 假设总数是51，不能够被5整除的，那么最后一页的开始就是50
         else
-            last = total - total % count;      
+            last = total - total % count;
+    	}
     }
 }

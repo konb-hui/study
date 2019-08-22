@@ -41,6 +41,7 @@ public class StudentController {
 			map.put("doid", student.getDoid());
 			session.setAttribute("map",map);
 		}else if(flag!=null&&flag==2) {
+			if(session.getAttribute("map") != null)
 			map = (HashMap<String, Object>) session.getAttribute("map");
 			map.remove("start");
 			map.remove("count");
@@ -52,7 +53,10 @@ public class StudentController {
 			map.put("last",page.getLast());
 		}
 		List<Student> students = studentService.list(map);
-		mav.addObject("students",students);
+		HashMap<String, Object> m = new HashMap<>();
+		m.put("students", students);
+		m.put("map", map);
+		mav.addAllObjects(m);
 		mav.setViewName("listStudent");
 		return mav;
 	}
@@ -73,30 +77,30 @@ public class StudentController {
 		return mav;
 	}
 	
-	@RequestMapping("test")
-	public ModelAndView test() {
-		ModelAndView mav = new ModelAndView();
-		Student student = new Student();
-		Random r = new Random();
-		for(int i = 0;i < 165;i++) {
-			student.setName("学生" + i);
-			int a = r.nextInt(4);
-			if(a == 0) student.setClassName("一班");
-			else if(a == 1) student.setClassName("二班");
-			else if(a == 2) student.setClassName("三班");
-			else if(a == 3) student.setClassName("四班");	
-			int b = r.nextInt(3);
-			if(b == 0) student.setGrade("高一");
-			else if(b == 1) student.setGrade("高二");
-			else if(b == 2) student.setGrade("高三");
-			int c = r.nextInt(2);
-			if(c == 0) student.setSex("男");
-			else if(c == 1) student.setSex("女");
-			studentService.add(student);
-			}
-		mav.setViewName("redirect:/student/listStudent");
-		return mav;
-	}
+//	@RequestMapping("test")
+//	public ModelAndView test() {
+//		ModelAndView mav = new ModelAndView();
+//		Student student = new Student();
+//		Random r = new Random();
+//		for(int i = 0;i < 165;i++) {
+//			student.setName("学生" + i);
+//			int a = r.nextInt(4);
+//			if(a == 0) student.setClassName("一班");
+//			else if(a == 1) student.setClassName("二班");
+//			else if(a == 2) student.setClassName("三班");
+//			else if(a == 3) student.setClassName("四班");	
+//			int b = r.nextInt(3);
+//			if(b == 0) student.setGrade("高一");
+//			else if(b == 1) student.setGrade("高二");
+//			else if(b == 2) student.setGrade("高三");
+//			int c = r.nextInt(2);
+//			if(c == 0) student.setSex("男");
+//			else if(c == 1) student.setSex("女");
+//			studentService.add(student);
+//			}
+//		mav.setViewName("redirect:/student/listStudent");
+//		return mav;
+//	}
 	
 	@RequestMapping("editStudent")
 	public ModelAndView editStudent(Student student) {

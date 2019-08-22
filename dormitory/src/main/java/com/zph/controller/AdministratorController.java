@@ -1,5 +1,7 @@
 package com.zph.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +33,49 @@ public class AdministratorController {
 		}else if(null == admin) {
 			mav = new ModelAndView("redirect:login");
 			//mav.addObject("msg","用户或密码错误");
+		}
+		return mav;
+	}
+	
+	@RequestMapping("listAdmin")
+	public ModelAndView listAdmin() {
+		ModelAndView mav = new ModelAndView();
+		List<Administrator> administrators = administratorService.list();
+		mav.addObject("admins",administrators);
+		mav.setViewName("listAdmin");
+		return mav;
+	}
+	
+	@RequestMapping("addAdmin")
+	public ModelAndView addAdmin(Administrator administrator) {
+		ModelAndView mav = new ModelAndView();
+		if(administrator.getUsername() == null) {
+			mav.setViewName("addAdmin");
+		}else {
+			administratorService.add(administrator);
+			mav.setViewName("redirect:listAdmin");
+		}
+		return mav;
+	}
+	
+	@RequestMapping("deleteAdmin")
+	public ModelAndView deleteAdmin(Administrator administrator) {
+		ModelAndView mav = new ModelAndView();
+		administratorService.delete(administrator.getId());
+		mav.setViewName("redirect:listAdmin");
+		return mav;
+	}
+	
+	@RequestMapping("editAdmin")
+	public ModelAndView editAdmin(Administrator administrator) {
+		ModelAndView mav = new ModelAndView();
+		if(administrator.getUsername() == null&&administrator.getPassword() == null) {
+			Administrator a = administratorService.get(administrator.getId());
+			mav.addObject("a",a);
+			mav.setViewName("editAdmin");
+		}else {
+			administratorService.update(administrator);
+			mav.setViewName("redirect:listAdmin");
 		}
 		return mav;
 	}

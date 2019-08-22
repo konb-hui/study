@@ -18,10 +18,10 @@
 		<td><a href="student/listStudent">学生信息</a></td>
 	</tr>
 	<tr>
-		<td><a href="">教职工信息</a></td>
+		<td><a href="staff/listStaff">教职工信息</a></td>
 	</tr>
 	<tr>
-		<td><a href="">管理员信息</a></td>
+		<td><a href="listAdmin">管理员信息</a></td>
 	</tr>
 </table>
 <a href="student/test">增加学生信息</a>

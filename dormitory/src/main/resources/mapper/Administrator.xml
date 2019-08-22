@@ -5,7 +5,7 @@
     
 <mapper namespace="com.zph.mapper.AdministratorMapper">
 	<insert id="add" parameterType="Administrator">
-		insert into administrator_ (username,password,type) values (#{username},#{password},#{type})
+		insert into administrator_ (username,password,type) values (#{username},#{password},1)
 	</insert>
 	<delete id="delete" parameterType="Administrator">
 		delete from administrator_ where id = #{id}
@@ -14,7 +14,7 @@
 		select * from administrator_ where id = #{id}
 	</select>
 	<update id="update" parameterType="Administrator">
-		update administrator_ set username=#{username},password=#{password},type=#{type} where id=#{id}
+		update administrator_ set username=#{username},password=#{password} where id=#{id}
 	</update>
 	<select id="list" resultType="Administrator">
 		select * from administrator_
