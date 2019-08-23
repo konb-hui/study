@@ -1,5 +1,7 @@
 package com.zph.pojo;
 
+import java.util.List;
+
 public class Dormitory {
 	private int id;
 	private int bid;
@@ -8,6 +10,8 @@ public class Dormitory {
 	private int surplusBed;
 	//所属楼栋
 	private DormitoryBuilding dormitoryBuilding;
+	//入住学生
+	private List<Student> students;
 	public int getId() {
 		return id;
 	}

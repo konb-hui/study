@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.zph.pojo.DormitoryBuilding;
+import com.zph.pojo.Student;
 import com.zph.service.DormitoryBuildingService;
 
 @Controller
@@ -74,5 +75,19 @@ public class DormitoryBuildingController {
 	@RequestMapping("/addStudent")
 	public ModelAndView addStudent() {
 		return new ModelAndView("addStudent");
+	}
+	
+	@RequestMapping("selectForStudent")
+	public ModelAndView selectForStudent(Student student) {
+		ModelAndView mav = new ModelAndView();
+		DormitoryBuilding d = new DormitoryBuilding();
+		if(student.getSex().equals("男"))
+			d.setType(0);
+		else 
+			d.setType(1);
+		List<DormitoryBuilding> dormitoryBuildings = dormitoryBuildingService.list(d);
+		mav.addObject("dbs",dormitoryBuildings);
+		mav.setViewName("selectDormitory");
+		return mav;
 	}
 }

@@ -6,7 +6,7 @@ import com.zph.pojo.DormitoryBuilding;
 
 public interface DormitoryBuildingService {
 	
-	List<DormitoryBuilding> list();
+	List<DormitoryBuilding> list(DormitoryBuilding dormitoryBuilding);
 	
 	void add(DormitoryBuilding dormitoryBuilding);
 	
@@ -15,4 +15,6 @@ public interface DormitoryBuildingService {
 	DormitoryBuilding get(int id);
 	
 	void update(DormitoryBuilding dormitoryBuilding);
+	
+	List<DormitoryBuilding> list();
 }

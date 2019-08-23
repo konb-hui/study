@@ -41,6 +41,11 @@ public class DormitoryBuildingServiceImpl implements DormitoryBuildingService {
 		// TODO Auto-generated method stub
 		dormitoryBuildingMapper.update(dormitoryBuilding);
 	}
+	@Override
+	public List<DormitoryBuilding> list(DormitoryBuilding dormitoryBuilding) {
+		// TODO Auto-generated method stub
+		return dormitoryBuildingMapper.list(dormitoryBuilding);
+	}
 	
 
 }

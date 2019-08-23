@@ -15,4 +15,6 @@ public interface DormitoryBuildingMapper {
 	public int update(DormitoryBuilding dormitoryBuilding);
 	
 	public List<DormitoryBuilding> list();
+	
+	public List<DormitoryBuilding> list(DormitoryBuilding dormitoryBuilding);
 }

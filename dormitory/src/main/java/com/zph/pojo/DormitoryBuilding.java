@@ -10,7 +10,7 @@ public class DormitoryBuilding {
 	//剩余可住房间数
 	private int surplusRoom;
 	//宿舍楼栋类型：0为男生宿舍，1为女生宿舍，2为教职工宿舍
-	private int type;
+	private Integer type;
 	//层数
 	private int layerNumber;
 	//区数
@@ -35,10 +35,10 @@ public class DormitoryBuilding {
 	public void setSurplusRoom(int surplusRoom) {
 		this.surplusRoom = surplusRoom;
 	}
-	public int getType() {
+	public Integer getType() {
 		return type;
 	}
-	public void setType(int type) {
+	public void setType(Integer type) {
 		this.type = type;
 	}
 	public int getLayerRoomNumber() {

@@ -117,4 +117,5 @@ public class StudentController {
 		mav.setViewName("redirect:/student/listStudent");
 		return mav;
 	}
+	
 }

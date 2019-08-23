@@ -13,6 +13,13 @@
 			<result column="dbname" property="name"/>
 		</association>
 	</resultMap>
+	<resultMap type="Dormitory" id="DormitoryStudent">
+		<id column="did" property="id"/>
+		<result column="dname" property="name"/>
+		<result column="bid" property="bid"/>
+		<result column="surplusBed" property="surplusBed"/>
+		<association property="students"></association>
+	</resultMap>
 	<insert id="add" parameterType="Dormitory">
 		insert into dormitory_ (bid,name,surplusBed) values (#{bid},#{name},#{surplusBed})
 	</insert>
@@ -36,5 +43,8 @@
 	</select>
 	<select id="totalOfPart" parameterType="int" resultType="int">
 		select count(*) from dormitory_ where bid = #{bid}
+	</select>
+	<select id="listForStudent" parameterType="int">
+		select s.*,d.*,s.id 'sid',d.id 'did',s.name 'sname',d.name 'dname' from dormitory_ left join student_ on s.doid = d.id and d.surplusBed > 0 and d.id=#{bid}
 	</select>
 </mapper>

@@ -65,7 +65,7 @@
 		<td>${s.sex}</td>
 		<td>${s.className}</td>
 		<td>${s.grade}</td>
-		<c:if test="${s.doid == -1}"><td>无（<a href="">添加宿舍</a>）</td></c:if>
+		<c:if test="${s.doid == -1}"><td>无（<a href="/dormitory/selectForStudent?id=${s.id}&sex=${s.sex}">添加宿舍</a>）</td></c:if>
 		<c:if test="${s.doid > -1}"><td>${s.dormitory.dormitoryBuilding.name} ${s.dormitory.name}</c:if>
 		<td><a href="editStudent?id=${s.id}">修改</a></td>
 		<td><a href="deleteStudent?id=${s.id}">删除</a></td>

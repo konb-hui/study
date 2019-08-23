@@ -86,4 +86,10 @@ public class DormitoryController {
 		mav.setViewName("redirect:building");
 		return mav;
 	}
+	
+	@RequestMapping("selectDormitory")
+	public ModelAndView selectDormitory(int sid,int bid) {
+		ModelAndView mav = new ModelAndView();
+		return mav;
+	}
 }
