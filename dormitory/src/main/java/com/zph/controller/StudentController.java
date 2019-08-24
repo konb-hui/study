@@ -118,4 +118,13 @@ public class StudentController {
 		return mav;
 	}
 	
+	@RequestMapping("addDormitoryForStudent")
+	public ModelAndView addDormitoryForStudent(int id,int doid) {
+		ModelAndView mav = new ModelAndView();
+		Student student = studentService.get(id);
+		student.setDoid(doid);
+		studentService.update(student);
+		mav.setViewName("redirect:/updateDormitorySurplusBed?id=" + doid);
+		return mav;
+	}
 }

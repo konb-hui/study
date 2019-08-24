@@ -18,4 +18,10 @@ public interface DormitoryService {
 	void deleteByBuilding(int bid);
 	
 	int totalOfPart(int bid);
+	
+	List<Dormitory> listForStudent(HashMap<String, Integer> map);
+	
+	Dormitory getById(int id);
+	
+	void update(Dormitory dormitory);
 }

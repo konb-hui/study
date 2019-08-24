@@ -48,4 +48,22 @@ public class DormitoryServiceImpl implements DormitoryService {
 		return dormitoryMapper.totalOfPart(bid);
 	}
 
+	@Override
+	public List<Dormitory> listForStudent(HashMap<String, Integer> map) {
+		// TODO Auto-generated method stub
+		return dormitoryMapper.listForStudent(map);
+	}
+
+	@Override
+	public Dormitory getById(int id) {
+		// TODO Auto-generated method stub
+		return dormitoryMapper.getById(id);
+	}
+
+	@Override
+	public void update(Dormitory dormitory) {
+		// TODO Auto-generated method stub
+		dormitoryMapper.update(dormitory);
+	}
+
 }

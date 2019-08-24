@@ -16,7 +16,7 @@
 	<table align="center">
 		<tr>
 			<td>请选择楼栋</td>
-			<td><select name="bid">
+			<td><select name="bid" id="bid" value="${bid}">
 			<c:forEach items="${dbs}" var="db" varStatus="st">
 				<option value="${db.id}">${db.name}</option>
 			</c:forEach>
@@ -34,14 +34,22 @@
 			<td colspan="4">已住</td>
 		</tr>
 		<c:forEach items="${ds}" var="d" varStatus="st">
+		<tr>
 			<td>${d.name}</td>
 			<td>${d.surplusBed}</td>
 			<c:forEach items="${d.students}" var="s" varStatus="st">
 			<td>${s.grade}${s.className}${s.name}</td>
 			</c:forEach>
-			<td><a href="">增加</a></td>
+			<td><a href="student/addDormitoryForStudent?id=${sid}&doid=${d.id}">增加</a></td>
+		</tr>
 		</c:forEach>
 	</table>
+	<div style="text-align:center">
+        <a href="selectDormitory?start=0&sid=${sid}&bid=${bid}">首  页</a>
+        <a href="selectDormitory?start=${page.start-page.count}&sid=${sid}&bid=${bid}">上一页</a>
+        <a href="selectDormitory?start=${page.start+page.count}&sid=${sid}&bid=${bid}">下一页</a>
+        <a href="selectDormitory?start=${page.last}&sid=${sid}&bid=${bid}">末  页</a>
+   </div>
 </c:if>
 </body>
 </html>

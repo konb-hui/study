@@ -18,4 +18,10 @@ public interface DormitoryMapper {
 		public int deleteByBuilding(int bid);
 		
 		public int totalOfPart(int bid);
+		
+		public List<Dormitory> listForStudent(HashMap<String, Integer> map);
+		
+		public Dormitory getById(int id);
+		
+		public int update(Dormitory dormitory);
 }

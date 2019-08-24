@@ -3,15 +3,18 @@ package com.zph.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.zph.pojo.Dormitory;
 import com.zph.pojo.DormitoryBuilding;
 import com.zph.pojo.Student;
 import com.zph.service.DormitoryBuildingService;
+import com.zph.util.Page;
 
 @Controller
 @RequestMapping("")
@@ -78,15 +81,19 @@ public class DormitoryBuildingController {
 	}
 	
 	@RequestMapping("selectForStudent")
-	public ModelAndView selectForStudent(Student student) {
+	public ModelAndView selectForStudent(Student student,HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		DormitoryBuilding d = new DormitoryBuilding();
-		if(student.getSex().equals("男"))
-			d.setType(0);
-		else 
-			d.setType(1);
+		if(student.getSex() != null) {
+			if(student.getSex().equals("男"))
+				d.setType(0);
+			else 
+				d.setType(1);
+		}
 		List<DormitoryBuilding> dormitoryBuildings = dormitoryBuildingService.list(d);
-		mav.addObject("dbs",dormitoryBuildings);
+		if(student.getSex() != null) session.setAttribute("dbs",dormitoryBuildings);
+		Page p = (Page) session.getAttribute("page");
+		if(p!=null) mav.addObject("page",p);
 		mav.setViewName("selectDormitory");
 		return mav;
 	}

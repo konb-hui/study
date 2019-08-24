@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -88,8 +89,36 @@ public class DormitoryController {
 	}
 	
 	@RequestMapping("selectDormitory")
-	public ModelAndView selectDormitory(int sid,int bid) {
+	public ModelAndView selectDormitory(int sid,int bid,HttpSession session,Page page) {
 		ModelAndView mav = new ModelAndView();
+		HashMap<String, Integer> map = new HashMap<>();
+		map.put("bid", bid);
+		int total = dormitoryService.listForStudent(map).size();
+		page.calculateLast(total);
+		if(page.getStart() < 0) page.setStart(0);
+		else if(page.getStart() >= total) page.setStart(page.getLast());
+		map.put("start", page.getStart());
+		map.put("count", page.getCount());
+		List<Dormitory> ds = dormitoryService.listForStudent(map);
+		session.setAttribute("ds", ds);
+		session.setAttribute("bid", bid);
+		session.setAttribute("sid", sid);
+		session.setAttribute("page", page);
+		mav.setViewName("redirect:selectForStudent");
+		return mav;
+	}
+	
+	@RequestMapping("updateDormitorySurplusBed")
+	public ModelAndView updateDormitorySurplusBed(int id) {
+		ModelAndView mav = new ModelAndView();
+		Dormitory dormitory = dormitoryService.getById(id);
+		dormitory.setSurplusBed(dormitory.getSurplusBed()-1);
+		dormitoryService.update(dormitory);
+		if(dormitory.getSurplusBed() == 0) {
+			mav.setViewName("redirect:updateBuildingSurplusRoom?id=" + dormitory.getBid());
+		}else {
+			mav.setViewName("redirect:/student/listStudent");
+		}
 		return mav;
 	}
 }

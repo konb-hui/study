@@ -18,7 +18,12 @@
 		<result column="dname" property="name"/>
 		<result column="bid" property="bid"/>
 		<result column="surplusBed" property="surplusBed"/>
-		<association property="students"></association>
+		<collection property="students" ofType="Student">
+			<id column="sid" property="id"/>
+			<result column="sname" property="name"/>
+			<result column="className" property="className"/>
+			<result column="grade" property="grade"/>
+		</collection>
 	</resultMap>
 	<insert id="add" parameterType="Dormitory">
 		insert into dormitory_ (bid,name,surplusBed) values (#{bid},#{name},#{surplusBed})
@@ -44,7 +49,13 @@
 	<select id="totalOfPart" parameterType="int" resultType="int">
 		select count(*) from dormitory_ where bid = #{bid}
 	</select>
-	<select id="listForStudent" parameterType="int">
-		select s.*,d.*,s.id 'sid',d.id 'did',s.name 'sname',d.name 'dname' from dormitory_ left join student_ on s.doid = d.id and d.surplusBed > 0 and d.id=#{bid}
+	<select id="listForStudent" parameterType="hashmap" resultMap="DormitoryStudent">
+		select s.*,d.*,s.id 'sid',d.id 'did',s.name 'sname',d.name 'dname' from dormitory_ d left join student_ s on s.doid = d.id where d.surplusBed > 0 and d.bid=#{bid}
+		<if test="start!=null and count!=null">
+			limit #{start},#{count}
+		</if>
 	</select>
+	<update id="update" parameterType="Dormitory">
+		update dormitory_ set surplusBed = #{surplusBed} where id = #{id}
+	</update>
 </mapper>
