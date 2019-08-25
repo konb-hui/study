@@ -27,7 +27,7 @@
 		<td>${s.sex}</td>
 		<td>${s.age}</td>
 		<td>${s.position}</td>
-		<c:if test="${s.doid==-1}"><td>无</td></c:if>
+		<c:if test="${s.doid==-1}"><td>无<a href="/dormitory/selectForStaff?id=${s.id}&sex=${s.sex}">添加</a></td></c:if>
 		<c:if test="${s.doid>=0}"><td>${s.dormitory.dormitoryBuilding.name} ${s.dormitory.name}</c:if>
 		<td><a href="deleteStaff?id=${s.id}">删除</a></td>
 		<td><a href="editStaff?id=${s.id}">修改</a></td>

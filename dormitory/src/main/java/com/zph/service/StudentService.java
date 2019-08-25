@@ -20,4 +20,5 @@ public interface StudentService {
 	
 	Student get(int id);
 	
+	List<Student> listByDoid(int doid);
 }

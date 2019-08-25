@@ -1,5 +1,6 @@
 package com.zph.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -89,35 +90,51 @@ public class DormitoryController {
 	}
 	
 	@RequestMapping("selectDormitory")
-	public ModelAndView selectDormitory(int sid,int bid,HttpSession session,Page page) {
+	public ModelAndView selectDormitory(int sid,int bid,HttpSession session,Page page,int flag) {
 		ModelAndView mav = new ModelAndView();
 		HashMap<String, Integer> map = new HashMap<>();
 		map.put("bid", bid);
-		int total = dormitoryService.listForStudent(map).size();
+		int total = 0;
+		if(flag == 0)
+			total = dormitoryService.listForStudent(map).size();
+		else if(flag == 1) 
+			total = dormitoryService.listForStaff(map).size();
 		page.calculateLast(total);
 		if(page.getStart() < 0) page.setStart(0);
 		else if(page.getStart() >= total) page.setStart(page.getLast());
 		map.put("start", page.getStart());
 		map.put("count", page.getCount());
-		List<Dormitory> ds = dormitoryService.listForStudent(map);
+		List<Dormitory> ds = new ArrayList<>();
+		if(flag == 0)
+			ds = dormitoryService.listForStudent(map);
+		else
+			ds = dormitoryService.listForStaff(map);
 		session.setAttribute("ds", ds);
 		session.setAttribute("bid", bid);
 		session.setAttribute("sid", sid);
 		session.setAttribute("page", page);
+		if(flag == 0)
 		mav.setViewName("redirect:selectForStudent");
+		else if(flag == 1)
+			mav.setViewName("redirect:selectForStaff");
 		return mav;
 	}
 	
 	@RequestMapping("updateDormitorySurplusBed")
-	public ModelAndView updateDormitorySurplusBed(int id) {
+	public ModelAndView updateDormitorySurplusBed(int id,HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		Dormitory dormitory = dormitoryService.getById(id);
 		dormitory.setSurplusBed(dormitory.getSurplusBed()-1);
 		dormitoryService.update(dormitory);
+		int flag = (int) session.getAttribute("flag");
 		if(dormitory.getSurplusBed() == 0) {
 			mav.setViewName("redirect:updateBuildingSurplusRoom?id=" + dormitory.getBid());
 		}else {
-			mav.setViewName("redirect:/student/listStudent");
+			if(flag == 0)
+				mav.setViewName("redirect:/student/listStudent");
+			else if(flag == 1)
+				mav.setViewName("redirect:/staff/listStaff");
+			session.invalidate();
 		}
 		return mav;
 	}

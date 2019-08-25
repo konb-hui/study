@@ -22,7 +22,7 @@
 		<td>${d.name}</td>
 		<td>${d.surplusBed}</td>
 		<td>${d.dormitoryBuilding.name}</td>
-		<td><a href="">查看</a></td>
+		<td><a href="student/listStudentInDormitory?doid=${d.id}">查看</a></td>
 	</tr>
 	</c:forEach>
 </table>	    

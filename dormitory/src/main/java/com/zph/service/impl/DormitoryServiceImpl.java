@@ -66,4 +66,10 @@ public class DormitoryServiceImpl implements DormitoryService {
 		dormitoryMapper.update(dormitory);
 	}
 
+	@Override
+	public List<Dormitory> listForStaff(HashMap<String, Integer> map) {
+		// TODO Auto-generated method stub
+		return dormitoryMapper.listForStaff(map);
+	}
+
 }

@@ -119,12 +119,22 @@ public class StudentController {
 	}
 	
 	@RequestMapping("addDormitoryForStudent")
-	public ModelAndView addDormitoryForStudent(int id,int doid) {
+	public ModelAndView addDormitoryForStudent(int id,int doid,HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		Student student = studentService.get(id);
 		student.setDoid(doid);
 		studentService.update(student);
 		mav.setViewName("redirect:/updateDormitorySurplusBed?id=" + doid);
+		session.setAttribute("flag", 0);
+		return mav;
+	}
+	
+	@RequestMapping("listStudentInDormitory")
+	public ModelAndView listStudentInDormitory(int doid) {
+		ModelAndView mav = new ModelAndView();
+		List<Student> students = studentService.listByDoid(doid);
+		mav.addObject("students",students);
+		mav.setViewName("listStudentByDoid");
 		return mav;
 	}
 }

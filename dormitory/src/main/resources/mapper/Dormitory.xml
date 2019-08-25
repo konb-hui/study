@@ -25,6 +25,18 @@
 			<result column="grade" property="grade"/>
 		</collection>
 	</resultMap>
+		<resultMap type="Dormitory" id="DormitoryStaff">
+		<id column="did" property="id"/>
+		<result column="dname" property="name"/>
+		<result column="bid" property="bid"/>
+		<result column="surplusBed" property="surplusBed"/>
+		<collection property="staffs" ofType="Staff">
+			<id column="sid" property="id"/>
+			<result column="sname" property="name"/>
+			<result column="position" property="position"/>
+			<result column="age" property="age"/>
+		</collection>
+	</resultMap>
 	<insert id="add" parameterType="Dormitory">
 		insert into dormitory_ (bid,name,surplusBed) values (#{bid},#{name},#{surplusBed})
 	</insert>
@@ -58,4 +70,10 @@
 	<update id="update" parameterType="Dormitory">
 		update dormitory_ set surplusBed = #{surplusBed} where id = #{id}
 	</update>
+	<select id="listForStaff" parameterType="hashmap" resultMap="DormitoryStaff">
+		select s.*,d.*,s.id 'sid',d.id 'did',s.name 'sname',d.name 'dname' from dormitory_ d left join staff_ s on s.doid = d.id where d.surplusBed > 0 and d.bid=#{bid}
+		<if test="start!=null and count!=null">
+			limit #{start},#{count}
+		</if>
+	</select>
 </mapper>

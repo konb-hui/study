@@ -14,7 +14,7 @@
 		select * from dormitorybuilding_ where id = #{id}
 	</select>
 	<update id="update" parameterType="DormitoryBuilding">
-		update dormitorybuilding_ set name=#{name},type=#{type} where id = #{id}
+		update dormitorybuilding_ set name=#{name},type=#{type},surplusRoom=#{surplusRoom} where id = #{id}
 	</update>
 	<select id="list" resultType="DormitoryBuilding">
 		select * from dormitorybuilding_

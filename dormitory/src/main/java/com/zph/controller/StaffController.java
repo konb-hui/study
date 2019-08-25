@@ -2,6 +2,8 @@ package com.zph.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -68,6 +70,17 @@ public class StaffController {
 		if(staff != null)
 			staffService.update(staff);
 		mav.setViewName("redirect:listStaff");
+		return mav;
+	}
+	
+	@RequestMapping("addDormitoryForStaff")
+	public ModelAndView addDormitoryForStaff(int id,int doid,HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		Staff staff = staffService.get(id);
+		staff.setDoid(doid);
+		staffService.update(staff);
+		mav.setViewName("redirect:/updateDormitorySurplusBed?id=" + doid);
+		session.setAttribute("flag", 1);
 		return mav;
 	}
 }

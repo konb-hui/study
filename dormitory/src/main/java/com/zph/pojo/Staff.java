@@ -47,7 +47,7 @@ public class Staff {
 	public int getDoid() {
 		return doid;
 	}
-	public void setDoid(int did) {
-		this.doid = did;
+	public void setDoid(int doid) {
+		this.doid = doid;
 	}
 }

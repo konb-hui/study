@@ -53,4 +53,10 @@ public class StudentServiceImpl implements StudentService {
 		return studentMapper.list(map);
 	}
 
+	@Override
+	public List<Student> listByDoid(int doid) {
+		// TODO Auto-generated method stub
+		return studentMapper.listByDoid(doid);
+	}
+
 }

@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.zph.pojo.Dormitory;
 import com.zph.pojo.DormitoryBuilding;
+import com.zph.pojo.Staff;
 import com.zph.pojo.Student;
 import com.zph.service.DormitoryBuildingService;
 import com.zph.util.Page;
@@ -95,6 +96,36 @@ public class DormitoryBuildingController {
 		Page p = (Page) session.getAttribute("page");
 		if(p!=null) mav.addObject("page",p);
 		mav.setViewName("selectDormitory");
+		return mav;
+	}
+	
+	@RequestMapping("selectForStaff")
+	public ModelAndView selectForStaff(Staff staff,HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		DormitoryBuilding d = new DormitoryBuilding();
+		if(staff.getSex() != null)
+			d.setType(2);
+		List<DormitoryBuilding> dormitoryBuildings = dormitoryBuildingService.list(d);
+		if(staff.getSex() != null) session.setAttribute("dbs",dormitoryBuildings);
+		Page p = (Page) session.getAttribute("page");
+		if(p!=null) mav.addObject("page",p);
+		mav.setViewName("selectDormitory");
+		return mav;
+	}
+	
+	@RequestMapping("updateBuildingSurplusRoom")
+	public ModelAndView updateBuildingSurplusRoom(int id,HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		Integer DBid = (Integer) session.getAttribute("DBid");
+		DormitoryBuilding db = dormitoryBuildingService.get(id);
+		db.setSurplusRoom(db.getSurplusRoom() - 1);
+		dormitoryBuildingService.update(db);
+		int flag = (int) session.getAttribute("flag");
+		if(flag == 0)
+		mav.setViewName("redirect:/student/listStudent");
+		else if(flag == 1)
+			mav.setViewName("redirect:/staff/listStaff");
+		session.invalidate();
 		return mav;
 	}
 }

@@ -24,4 +24,6 @@ public interface DormitoryService {
 	Dormitory getById(int id);
 	
 	void update(Dormitory dormitory);
+	
+	List<Dormitory> listForStaff(HashMap<String, Integer> map);
 }

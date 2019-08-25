@@ -4,6 +4,23 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
 <mapper namespace="com.zph.mapper.StaffMapper">
+	<resultMap type="Staff" id="StaffBean">
+		<id column="sid" property="id"/>
+		<result column="sname" property="name"/>
+		<result column="sex" property="sex"/>
+		<result column="position" property="position"/>
+		<result column="age" property="age"/>
+		<result column="doid" property="doid"/>
+		<association property="dormitory" javaType="Dormitory">
+			<id column="did" property="id"/>
+			<result column="dname" property="name"/>
+			<result column="bid" property="bid"/>
+			<association property="dormitoryBuilding" javaType="DormitoryBuilding">
+				<id column="dbid" property="id"/>
+				<result column="bname" property="name"/>
+			</association>
+		</association>
+	</resultMap>
 	<insert id="add" parameterType="Staff">
 		insert into staff_ (name,sex,age,position,doid) values (#{name},#{sex},#{age},#{position},-1)
 	</insert>
@@ -14,10 +31,10 @@
 		select * from staff_ where id = #{id}
 	</select>
 	<update id="update" parameterType="Staff">
-		update staff_ set name=#{name},age=#{age},sex=#{sex},position=#{position} where id = #{id}
+		update staff_ set name=#{name},age=#{age},sex=#{sex},position=#{position},doid=#{doid} where id = #{id}
 	</update>
-	<select id="list" resultType="Staff">
-		select * from staff_
+	<select id="list" resultMap="StaffBean">
+		select s.*,d.*,b.*,s.id 'sid',d.id 'did',b.id 'dbid',s.name 'sname',d.name 'dname',b.name 'bname' from staff_ s left join dormitory_ d on s.doid = d.id left join dormitoryBuilding_ b on d.bid = b.id
 		<if test="start!=null and count!=null">
 			limit #{start},#{count}
 		</if>

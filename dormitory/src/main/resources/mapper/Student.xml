@@ -4,6 +4,23 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
 <mapper namespace="com.zph.mapper.StudentMapper">
+	<resultMap type="Student" id="StudentBean">
+		<id column="sid" property="id"/>
+		<result column="sname" property="name"/>
+		<result column="sex" property="sex"/>
+		<result column="className" property="className"/>
+		<result column="grade" property="grade"/>
+		<result column="doid" property="doid"/>
+		<association property="dormitory" javaType="Dormitory">
+			<id column="did" property="id"/>
+			<result column="dname" property="name"/>
+			<result column="bid" property="bid"/>
+			<association property="dormitoryBuilding" javaType="DormitoryBuilding">
+				<id column="dbid" property="id"/>
+				<result column="bname" property="name"/>
+			</association>
+		</association>
+	</resultMap>
 	<insert id="add" parameterType="Student">
 		insert into student_ (name,sex,className,grade,doid) values (#{name},#{sex},#{className},#{grade},-1)
 	</insert>
@@ -16,26 +33,26 @@
 	<update id="update" parameterType="Student">
 		update student_ set name=#{name},className=#{className},grade=#{grade},doid=#{doid} where id = #{id}
 	</update>
-	<select id="list" parameterType="hashmap" resultType="Student">
-		select * from student_
+	<select id="list" parameterType="hashmap" resultMap="StudentBean">
+		select s.*,d.*,b.*,s.id 'sid',d.id 'did',b.id 'dbid',s.name 'sname',d.name 'dname',b.name 'bname' from student_ s left join dormitory_ d on s.doid = d.id left join dormitoryBuilding_ b on d.bid = b.id
 		<where>
 		<if test="className!='null' and grade!=null">
-			and className=#{className}
+			and s.className=#{className}
 		</if>
 		<if test="grade!='null' and grade!=null">
-			and grade=#{grade}
+			and s.grade=#{grade}
 		</if>
 		<if test="sex!='null' and grade!=null">
-			and sex=#{sex}
+			and s.sex=#{sex}
 		</if>
 		<if test="doid==-1">
-			and doid=#{doid}
+			and s.doid=#{doid}
 		</if>
 		<if test="doid==0">
-			and doid >= #{doid}
+			and s.doid >= #{doid}
 		</if>
 		<if test="name!=null">
-			and name like concat('%',#{name},'%')
+			and s.name like concat('%',#{name},'%')
 		</if>
 		</where>
 		<if test="start!=null and count!=null">
@@ -44,5 +61,8 @@
 	</select>
 	<select id="total" resultType="int">
 		select count(*) from student_
+	</select>
+	<select id="listByDoid" parameterType="int" resultType="Student">
+		select * from student_ where doid=#{doid}
 	</select>
 </mapper>

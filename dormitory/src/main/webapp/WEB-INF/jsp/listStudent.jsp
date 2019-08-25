@@ -56,6 +56,7 @@
 		<td>所在宿舍</td>
 		<td>修改</td>
 		<td>删除</td>
+		<td>修改宿舍</td>
 		<td><a href="/dormitory/addStudent">添加</a>
 	</tr>
 	<c:forEach items="${students}" var="s" varStatus="st">
@@ -69,6 +70,8 @@
 		<c:if test="${s.doid > -1}"><td>${s.dormitory.dormitoryBuilding.name} ${s.dormitory.name}</c:if>
 		<td><a href="editStudent?id=${s.id}">修改</a></td>
 		<td><a href="deleteStudent?id=${s.id}">删除</a></td>
+		<c:if test="${s.doid == -1}"><td></td></c:if>
+		<c:if test="${s.doid > -1}"><td><a href="/dormitory/selectForStudent?id=${s.id}&sex=${s.sex}&doid=${s.doid}">换宿舍</a></td></c:if>
 	</tr>
 	</c:forEach>
 </table>

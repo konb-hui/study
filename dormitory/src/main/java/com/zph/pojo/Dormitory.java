@@ -12,6 +12,14 @@ public class Dormitory {
 	private DormitoryBuilding dormitoryBuilding;
 	//入住学生
 	private List<Student> students;
+	//入住教职工
+	private List<Staff> staffs;
+	public List<Staff> getStaffs() {
+		return staffs;
+	}
+	public void setStaffs(List<Staff> staffs) {
+		this.staffs = staffs;
+	}
 	public List<Student> getStudents() {
 		return students;
 	}

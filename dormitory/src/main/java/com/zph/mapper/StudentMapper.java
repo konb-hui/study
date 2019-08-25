@@ -19,4 +19,6 @@ public interface StudentMapper {
 	public int update(Student student);
 	
 	public Student get(int id);
+	
+ 	public List<Student> listByDoid(int doid);
 }
