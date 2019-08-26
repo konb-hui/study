@@ -26,4 +26,9 @@ public interface DormitoryMapper {
 		public int update(Dormitory dormitory);
 		
 		public List<Dormitory> listForStaff(HashMap<String, Integer> map);
+		
+		public List<Dormitory> getForStudent(HashMap<String, Integer> map);
+		
+		public List<Dormitory> getForStaff(HashMap<String, Integer> map);
+		
 }

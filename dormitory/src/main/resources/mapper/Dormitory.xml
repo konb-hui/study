@@ -76,4 +76,16 @@
 			limit #{start},#{count}
 		</if>
 	</select>
+		<select id="getForStaff" parameterType="hashmap" resultMap="DormitoryStaff">
+		select s.*,d.*,s.id 'sid',d.id 'did',s.name 'sname',d.name 'dname' from dormitory_ d left join staff_ s on s.doid = d.id where d.bid=#{bid}
+		<if test="start!=null and count!=null">
+			limit #{start},#{count}
+		</if>
+	</select>
+		<select id="getForStudent" parameterType="hashmap" resultMap="DormitoryStudent">
+		select s.*,d.*,s.id 'sid',d.id 'did',s.name 'sname',d.name 'dname' from dormitory_ d left join student_ s on s.doid = d.id where d.bid=#{bid}
+		<if test="start!=null and count!=null">
+			limit #{start},#{count}
+		</if>
+	</select>
 </mapper>

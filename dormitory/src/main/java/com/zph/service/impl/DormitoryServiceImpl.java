@@ -72,4 +72,16 @@ public class DormitoryServiceImpl implements DormitoryService {
 		return dormitoryMapper.listForStaff(map);
 	}
 
+	@Override
+	public List<Dormitory> getForStaff(HashMap<String, Integer> map) {
+		// TODO Auto-generated method stub
+		return dormitoryMapper.getForStaff(map);
+	}
+
+	@Override
+	public List<Dormitory> getForStudent(HashMap<String, Integer> map) {
+		// TODO Auto-generated method stub
+		return dormitoryMapper.getForStudent(map);
+	}
+
 }

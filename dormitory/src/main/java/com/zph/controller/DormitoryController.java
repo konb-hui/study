@@ -90,15 +90,19 @@ public class DormitoryController {
 	}
 	
 	@RequestMapping("selectDormitory")
-	public ModelAndView selectDormitory(int sid,int bid,HttpSession session,Page page,int flag) {
+	public ModelAndView selectDormitory(int sid,int bid,HttpSession session,Page page,Integer flag) {
 		ModelAndView mav = new ModelAndView();
 		HashMap<String, Integer> map = new HashMap<>();
 		map.put("bid", bid);
 		int total = 0;
-		if(flag == 0)
-			total = dormitoryService.listForStudent(map).size();
-		else if(flag == 1) 
-			total = dormitoryService.listForStaff(map).size();
+		if(flag == null) flag = (Integer) session.getAttribute("flags");
+		if(flag != null) {
+			if(flag == 0)
+				total = dormitoryService.listForStudent(map).size();
+			else if(flag == 1) 
+				total = dormitoryService.listForStaff(map).size();
+			session.setAttribute("flags", flag);
+		}
 		page.calculateLast(total);
 		if(page.getStart() < 0) page.setStart(0);
 		else if(page.getStart() >= total) page.setStart(page.getLast());
@@ -136,6 +140,41 @@ public class DormitoryController {
 				mav.setViewName("redirect:/staff/listStaff");
 			session.invalidate();
 		}
+		return mav;
+	}
+	
+	@RequestMapping("changeDormitory")
+	public ModelAndView changeDormitory(int sid,int bid,HttpSession session,Page page,Integer flag) {
+		ModelAndView mav = new ModelAndView();
+		HashMap<String, Integer> map = new HashMap<>();
+		map.put("bid", bid);
+		int total = 0;
+		if(flag == null) flag = (Integer) session.getAttribute("flags");
+		if(flag != null) {
+			if(flag == 0)
+				total = dormitoryService.listForStudent(map).size();
+			else if(flag == 1) 
+				total = dormitoryService.listForStaff(map).size();
+			session.setAttribute("flags", flag);
+		}
+		page.calculateLast(total);
+		if(page.getStart() < 0) page.setStart(0);
+		else if(page.getStart() >= total) page.setStart(page.getLast());
+		map.put("start", page.getStart());
+		map.put("count", page.getCount());
+		List<Dormitory> ds = new ArrayList<>();
+		if(flag == 0)
+			ds = dormitoryService.getForStudent(map);
+		else
+			ds = dormitoryService.getForStaff(map);
+		session.setAttribute("ds", ds);
+		session.setAttribute("bid", bid);
+		session.setAttribute("sid", sid);
+		session.setAttribute("page", page);
+		if(flag == 0)
+		mav.setViewName("redirect:updateDormitoryForStudent");
+		else if(flag == 1)
+			mav.setViewName("redirect:updateDormitoryForStaff");
 		return mav;
 	}
 }

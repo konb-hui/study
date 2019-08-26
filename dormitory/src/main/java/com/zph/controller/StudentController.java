@@ -11,7 +11,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.zph.pojo.Dormitory;
+import com.zph.pojo.DormitoryBuilding;
 import com.zph.pojo.Student;
+import com.zph.service.DormitoryBuildingService;
+import com.zph.service.DormitoryService;
 import com.zph.service.StudentService;
 import com.zph.util.Page;
 
@@ -21,6 +25,12 @@ public class StudentController {
 	
 	@Autowired
 	StudentService studentService;
+	
+	@Autowired
+	DormitoryService dormitoryService;
+	
+	@Autowired
+	DormitoryBuildingService dormitoryBuildingService;
 	
 	@RequestMapping("listStudent")
 	public ModelAndView listStudent(Page page,Student student,Integer flag,HttpSession session) {
@@ -137,4 +147,50 @@ public class StudentController {
 		mav.setViewName("listStudentByDoid");
 		return mav;
 	}
+	
+	@RequestMapping("updateDormitoryForStudent")
+	public ModelAndView updateDormitoryForStudent(int id,int doid,HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		Student student = studentService.get(id);
+		Dormitory dormitory1 = dormitoryService.getById(student.getDoid());
+		if(dormitory1.getSurplusBed() == 0) {
+			dormitory1.setSurplusBed(1);
+			dormitoryService.update(dormitory1);
+			DormitoryBuilding dormitoryBuilding = dormitoryBuildingService.get(dormitory1.getBid());
+			dormitoryBuilding.setSurplusRoom(dormitoryBuilding.getSurplusRoom() + 1);
+			dormitoryBuildingService.update(dormitoryBuilding);
+		}else {
+			dormitory1.setSurplusBed(dormitory1.getSurplusBed() + 1);
+			dormitoryService.update(dormitory1);
+		}
+		student.setDoid(doid);
+		Dormitory dormitory2 = dormitoryService.getById(doid);
+		dormitory2.setSurplusBed(dormitory2.getSurplusBed() - 1);
+		dormitoryService.update(dormitory2);
+		if(dormitory2.getSurplusBed() == 0) {
+			DormitoryBuilding dormitoryBuilding = dormitoryBuildingService.get(dormitory1.getBid());
+			dormitoryBuilding.setSurplusRoom(dormitoryBuilding.getSurplusRoom() - 1);
+			dormitoryBuildingService.update(dormitoryBuilding);
+		}
+		studentService.update(student);
+		mav.setViewName("redirect:listStudent");
+		session.invalidate();
+		return mav;
+	}
+	
+	@RequestMapping("changeDormitoryForStudent")
+	public ModelAndView changeDormitoryForStudent(int id,int sid,HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		Student student1 = studentService.get(id);
+		Student student2 = studentService.get(sid);
+		Integer doid = student1.getDoid();
+		student1.setDoid(student2.getDoid());
+		student2.setDoid(doid);
+		studentService.update(student1);
+		studentService.update(student2);
+		mav.setViewName("redirect:listStudent");
+		session.invalidate();
+		return mav;
+	}
+	
 }
