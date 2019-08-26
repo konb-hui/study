@@ -82,6 +82,17 @@ public class StudentController {
 	@RequestMapping("deleteStudent")
 	public ModelAndView deleteStudent(Student student) {
 		ModelAndView mav = new ModelAndView();
+		Student s = studentService.get(student.getId());
+		if(s.getDoid() != -1) {
+			Dormitory dormitory = dormitoryService.getById(s.getDoid());
+			if(dormitory.getSurplusBed() == 0) {
+				DormitoryBuilding dormitoryBuilding = dormitoryBuildingService.get(dormitory.getBid());
+				dormitoryBuilding.setSurplusRoom(dormitoryBuilding.getSurplusRoom() + 1);
+				dormitoryBuildingService.update(dormitoryBuilding);
+			}
+			dormitory.setSurplusBed(dormitory.getSurplusBed() + 1);
+			dormitoryService.update(dormitory);
+		}
 		studentService.delete(student.getId());
 		mav.setViewName("redirect:/student/listStudent");
 		return mav;

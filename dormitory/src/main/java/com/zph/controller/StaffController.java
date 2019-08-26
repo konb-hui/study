@@ -60,6 +60,15 @@ public class StaffController {
 	@RequestMapping("deleteStaff")
 	public ModelAndView deleteStaff(Staff staff) {
 		ModelAndView mav = new ModelAndView();
+		Staff s = staffService.get(staff.getId());
+		if(s.getDoid() != -1) {
+			Dormitory d = dormitoryService.getById(s.getDoid());
+			DormitoryBuilding dormitoryBuilding = dormitoryBuildingService.get(d.getBid());
+			d.setSurplusBed(1);
+			dormitoryBuilding.setSurplusRoom(dormitoryBuilding.getSurplusRoom() + 1);
+			dormitoryService.update(d);
+			dormitoryBuildingService.update(dormitoryBuilding);
+		}
 		staffService.delete(staff.getId());
 		mav.setViewName("redirect:listStaff");
 		return mav;
