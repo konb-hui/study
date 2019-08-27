@@ -42,4 +42,7 @@
 	<select id="total" resultType="int">
 		select count(*) from staff_
 	</select>
+	<select id="listByDoid" parameterType="int" resultType="Staff">
+		select * from staff_ where doid=#{doid}
+	</select>
 </mapper>

@@ -54,9 +54,11 @@ public class DormitoryBuildingController {
 	@RequestMapping("deleteBuilding")
 	public ModelAndView deleteBuilding(DormitoryBuilding dormitoryBuilding) {
 		ModelAndView mav = new ModelAndView();
+		DormitoryBuilding db = dormitoryBuildingService.get(dormitoryBuilding.getId());
+		int type = db.getType();
 		dormitoryBuildingService.delete(dormitoryBuilding.getId());
 		int bid = dormitoryBuilding.getId();
-		mav.setViewName("redirect:deleteDormitory?bid=" + bid);
+		mav.setViewName("redirect:deleteDormitory?bid=" + bid + "&type=" + type);
 		return mav;
 	}
 	

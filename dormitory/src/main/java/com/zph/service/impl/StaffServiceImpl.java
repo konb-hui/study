@@ -52,4 +52,10 @@ public class StaffServiceImpl implements StaffService {
 		return staffMapper.get(id);
 	}
 
+	@Override
+	public List<Staff> listByDoid(int doid) {
+		// TODO Auto-generated method stub
+		return staffMapper.listByDoid(doid);
+	}
+
 }

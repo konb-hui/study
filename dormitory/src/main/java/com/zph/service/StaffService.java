@@ -18,4 +18,6 @@ public interface StaffService {
 	void update(Staff staff);
 	
 	Staff get(int id);
+	
+	List<Staff> listByDoid(int doid);
 }

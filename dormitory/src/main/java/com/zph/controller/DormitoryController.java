@@ -14,7 +14,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.zph.pojo.Dormitory;
 import com.zph.pojo.DormitoryBuilding;
+import com.zph.pojo.Staff;
+import com.zph.pojo.Student;
 import com.zph.service.DormitoryService;
+import com.zph.service.StaffService;
+import com.zph.service.StudentService;
 import com.zph.util.Page;
 
 @Controller
@@ -23,6 +27,12 @@ public class DormitoryController {
 	
 	@Autowired
 	DormitoryService dormitoryService;
+	
+	@Autowired
+	StudentService studentService;
+	
+	@Autowired
+	StaffService staffService;
 	
 	@RequestMapping("listDormitory")
 	public ModelAndView addDormitory(DormitoryBuilding db,Page page) {
@@ -82,8 +92,28 @@ public class DormitoryController {
 	}
 	
 	@RequestMapping("deleteDormitory")
-	public ModelAndView deleteByBuilding(int bid) {
+	public ModelAndView deleteByBuilding(int bid,int type) {
 		ModelAndView mav = new ModelAndView();
+		HashMap<String, Integer> map = new HashMap<>();
+		map.put("bid", bid);
+		List<Dormitory> dormitories = dormitoryService.getByBuilding(map);
+		if(type != 2) {
+			for (Dormitory dormitory : dormitories) {
+				ArrayList<Student> students = (ArrayList<Student>) studentService.listByDoid(dormitory.getBid());
+				for (Student student : students) {
+					student.setDoid(-1);
+					studentService.update(student);
+				}
+			}
+		}else {
+			for (Dormitory dormitory : dormitories) {
+				ArrayList<Staff> staffs = (ArrayList<Staff>) staffService.listByDoid(dormitory.getBid());
+				for (Staff staff : staffs) {
+					staff.setDoid(-1);
+					staffService.update(staff);
+				}
+			}
+		}
 		dormitoryService.deleteByBuilding(bid);
 		mav.setViewName("redirect:building");
 		return mav;

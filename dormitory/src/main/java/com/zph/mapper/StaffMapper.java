@@ -18,4 +18,6 @@ public interface StaffMapper {
 	public int update(Staff staff);
 	
 	public Staff get(int id);
+	
+	public List<Staff> listByDoid(int doid);
 }
